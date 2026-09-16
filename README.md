@@ -1,5 +1,17 @@
 # Anticipatory traffic routing
 
+## Start here: source code and readable results
+
+- **[Results PDF: all six policies, both planning modes, all four scenarios](reports/routing-results.pdf)**
+- **[Python source code](traffic_routing/)**: [simulation](traffic_routing/simulation.py), [routing policies](traffic_routing/routing.py), [RL policy](traffic_routing/swarm.py), [RL training](traffic_routing/train_swarm.py), [experiment and replanning](traffic_routing/experiment.py).
+- **[Automated tests](tests/)** and **[map animation source](map_demo/app.js)**.
+
+GitHub displays HTML files as source code. Read the PDF on GitHub, or download
+the project and open `map_demo/index.html` for the interactive demonstration.
+The PDF includes metrics and traffic charts; CSV and JSON results remain available.
+To rebuild it, install the optional `reportlab` package and run
+`python3 -m traffic_routing.pdf_report` from this directory.
+
 A working Python research prototype for routing around the congestion created by
 already assigned routes. Includes a deterministic simulator, six policies,
 custom scenarios, a standalone HTML comparison report, CSV metrics, full JSON
