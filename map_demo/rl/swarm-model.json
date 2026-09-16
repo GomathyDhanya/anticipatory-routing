@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "algorithm": "parameter-sharing REINFORCE",
+  "features": [
+    "free_flow_excess",
+    "observed_queue_delay",
+    "peak_committed_work",
+    "mean_committed_work",
+    "peak_committed_work_squared"
+  ],
+  "weights": [
+    -0.01839185787669574,
+    -0.6678647244130702,
+    -0.189844582432407,
+    0.16165708232428794,
+    -0.034096867879417556
+  ],
+  "metadata": {
+    "training_episodes": 480,
+    "selected_episode": 40,
+    "training_seeds": [
+      10000,
+      10479
+    ],
+    "validation_seeds": [
+      20000,
+      20001,
+      20002,
+      20003,
+      20004,
+      20005
+    ],
+    "test_seeds": [
+      30000,
+      30001,
+      30002,
+      30003,
+      30004,
+      30005,
+      30006,
+      30007,
+      30008,
+      30009,
+      30010,
+      30011
+    ],
+    "demo_seed": 19,
+    "initial_weights": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "reward": "negative mean completed trip time across ALL vehicles, divided by shortest free-flow time",
+    "baseline": "self-critical deterministic rollout of current frozen policy",
+    "optimizer": "Adam ascent, learning_rate=0.18, batch=8 by default, gradient norm clip=10",
+    "batch_size": 8,
+    "inference": "deterministic argmax; no learning during evaluation",
+    "validation_mean_trip_ticks": 116.57809472059438,
+    "training_config": {
+      "seed": 7,
+      "candidates": 6,
+      "forecast_horizon": 30,
+      "measurement_window": 300,
+      "max_ticks": 2000,
+      "severe_utilization": 1.5,
+      "alpha": 1.0,
+      "beta": 0.0,
+      "gamma": 0.0
+    },
+    "scope": "Milpitas\u2013Sunnyvale corridor; held-out demand seeds, not held-out geography",
+    "coordination": "shared parameters + current/future route-commitment board; no message-passing network"
+  }
+}

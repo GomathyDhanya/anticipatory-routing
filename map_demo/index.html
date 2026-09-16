@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milpitas → Sunnyvale · Traffic routing lab</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+<main>
+  <header class="topbar"><a class="brand" href="#"><span class="brand-mark">↗</span> FLOW<span class="brand-sub"> / ROUTING LAB</span></a><span class="data-status"><span></span>Real roads · Simulated traffic</span></header>
+  <section class="intro">
+    <div><p class="eyebrow">ONE COMMUTE. TWO ROUTING DECISIONS.</p><h1>Milpitas <span>→</span> Sunnyvale</h1><p class="subtitle">Watch the congestion a route creates—before the next driver gets there.</p></div>
+    <label class="scenario-label" for="scenario">Traffic scenario<select id="scenario"><option value="light">Light commute</option><option value="surge">Departure surge</option><option value="restriction" selected>CA 237 capacity stress</option></select></label>
+  </section>
+  <section class="playback" aria-label="Synchronized playback controls">
+    <button id="play" class="primary" type="button">▶ Play</button><button id="restart" class="quiet" type="button">↺ Restart</button>
+    <div class="scrubber"><label for="time">Elapsed <output id="clock" aria-live="off">00:00</output><span id="duration"></span></label><input id="time" type="range" min="0" max="300" step="0.1" value="0"></div>
+    <label class="speed-label" for="speed">Playback<select id="speed"><option value="1">10×</option><option value="2" selected>20×</option><option value="4">40×</option><option value="8">80×</option></select></label>
+  </section>
+  <div class="context-row"><span id="scene-note"></span><span class="sync">↔ Synchronized maps & departure times</span></div>
+  <section class="comparison" aria-label="Side-by-side traffic simulation">
+    <article class="panel" id="left-panel">
+      <div class="panel-header"><div><span class="panel-index">01 / BASELINE</span><label class="sr-only" for="left-policy">Left routing policy</label><select id="left-policy" class="policy-select"><option value="static">Static shortest path</option><option value="reactive" selected>Reactive routing</option><option value="predictive">Predictive routing</option><option value="anticipatory">Anticipatory routing</option><option value="cooperative">Cooperative routing</option></select><p class="policy-description" id="left-description"></p></div><div class="mean"><strong id="left-mean"></strong><span>mean trip · full run</span></div></div>
+      <div class="map" id="left-map" aria-label="Map of baseline vehicle movement"><canvas class="base"></canvas><canvas class="motion" aria-label="Animated vehicles on real road geometry"></canvas><div class="map-tag">MILPITAS → SUNNYVALE</div><div class="map-controls"><button type="button" data-zoom="in" aria-label="Zoom both maps in">+</button><button type="button" data-zoom="out" aria-label="Zoom both maps out">−</button><button type="button" data-zoom="reset" aria-label="Reset both maps">⌖</button></div><div class="map-credit">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors · ODbL</div><div class="map-scale"></div></div>
+      <div class="live-stats"><div><strong id="left-queued">0</strong><span>waiting in queues</span></div><div><strong id="left-moving">0</strong><span>moving</span></div><div><strong id="left-arrived">0 / 0</strong><span>arrived</span></div></div>
+    </article>
+    <article class="panel anticipatory" id="right-panel">
+      <div class="panel-header"><div><span class="panel-index">02 / COORDINATED</span><label class="sr-only" for="right-policy">Right routing policy</label><select id="right-policy" class="policy-select"><option value="rl_swarm" selected>RL swarm coordination</option><option value="anticipatory">Anticipatory routing</option><option value="cooperative">Cooperative routing</option></select><p class="policy-description" id="right-description"></p></div><div class="mean"><strong id="right-mean"></strong><span>mean trip · full run</span></div></div>
+      <div class="map" id="right-map" aria-label="Map of commitment-aware vehicle movement"><canvas class="base"></canvas><canvas class="motion" aria-label="Animated vehicles on real road geometry"></canvas><div class="map-tag">MILPITAS → SUNNYVALE</div><div class="map-controls"><button type="button" data-zoom="in" aria-label="Zoom both maps in">+</button><button type="button" data-zoom="out" aria-label="Zoom both maps out">−</button><button type="button" data-zoom="reset" aria-label="Reset both maps">⌖</button></div><div class="map-credit">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors · ODbL</div><div class="map-scale"></div></div>
+      <div class="live-stats"><div><strong id="right-queued">0</strong><span>waiting in queues</span></div><div><strong id="right-moving">0</strong><span>moving</span></div><div><strong id="right-arrived">0 / 0</strong><span>arrived</span></div></div>
+    </article>
+  </section>
+  <div class="legend"><span><i class="legend-line clear"></i>No entry queue</span><span><i class="legend-line slow"></i>Entry queue &lt; 30 s</span><span><i class="legend-line congested"></i>Entry queue ≥ 30 s</span><span><i class="legend-car"></i>One simulated vehicle</span><span>Drag to pan · Scroll to zoom</span></div>
+  <section class="road-detail" aria-label="Selected road comparison">
+    <label for="road">Inspect a road<select id="road"></select></label><div><span>Baseline</span><strong id="left-detail"></strong></div><div><span>Commitment-aware</span><strong id="right-detail"></strong></div><p>Committed = assigned vehicles still on earlier roads. Click a highlighted road to inspect it.</p>
+  </section>
+  <p id="rl-note" class="rl-note" hidden></p>
+  <section class="takeaway"><span class="takeaway-label">FULL-RUN COMPARISON</span><strong id="outcome"></strong><span id="delay-outcome"></span></section>
+  <section class="learning" id="learning"><details><summary>RL training &amp; held-out evaluation</summary><p id="training-summary"></p><div class="evaluation-table"><table><thead><tr><th>Policy</th><th>Mean trip across test seeds</th></tr></thead><tbody id="evaluation-rows"></tbody></table></div><p>Each vehicle uses the same learned route policy and a shared board of remaining road commitments. A team reward penalizes total travel time across all vehicles. Parameters are frozen for this demo. The no-commitments ablation hides future route information using the same weights; it is not a separately retrained policy. Test demand seeds are unseen, but the road network and scenario families are shared with training.</p><p><a href="rl/evaluation.json">Evaluation data</a> · <a href="rl/training-history.json">Training history</a> · <a href="rl/swarm-model.json">Learned checkpoint</a> · <a href="rl/README.md">Method and limits</a></p></details></section>
+  <footer><details><summary>What is real, and what is simulated?</summary><div class="notes"><p><strong>Real:</strong> OpenStreetMap road geometry and OSRM driving routes between geocoded city centers. Context roads provide orientation; only the highlighted corridor network is simulated. Routes via Tasman and Montague use explicit intermediate waypoints.</p><p><strong>Simulated:</strong> All vehicles, departures, capacity restrictions, queues, colors, and trip times. Capacity stress is a hypothetical reduction on one CA 237 segment, not a reported incident. Dots follow recorded simulator events; they are not tracked cars or a live traffic feed.</p><p><strong>Comparison:</strong> Identical vehicles, departure times, and road capacities in both panels. Five-sixths of vehicles are controlled; the rest follow static routes. Predictive, anticipatory, and cooperative baselines know background departures within a five-minute forecast horizon. RL uses current vehicle positions and route commitments. Queues have unlimited storage and do not physically spill back. Vehicles wait at road entry points; waiting markers are spread slightly for visibility.</p><p><strong>Limits:</strong> Route alternatives are limited to six paths on the union of three sourced corridors. This is not a citywide routing graph. Turn restrictions at newly recombined junctions are not modeled. Base traversal times come from cached OSRM estimates rounded to ten-second ticks, not current observed speeds. Demo capacities are assumptions, not measured lane capacity. Replay interpolates motion between discrete simulator events.</p><p id="source-info"></p><p><a href="../README.md">Project documentation</a> · <a href="data/demo.json">Download replay data</a> · <a href="https://project-osrm.org/docs/v26.4.0/http" target="_blank" rel="noreferrer">OSRM source documentation</a></p></div></details><p class="footer-note">A counterfactual traffic experiment. Not live navigation.</p></footer>
+  <p id="status" class="sr-only" aria-live="polite"></p>
+  <p><a id="report-link" href="reports/restriction/report.html" target="_blank">Full report: all six policies × both planning modes</a> · <a id="metrics-link" href="reports/restriction/metrics.csv">Metrics CSV</a></p>
+  <noscript>This demo needs JavaScript to animate the recorded simulations.</noscript>
+</main>
+</body>
+</html>

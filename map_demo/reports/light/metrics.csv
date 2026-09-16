@@ -1,0 +1,13 @@
+policy,planning_mode,vehicles,completed,replanning_decisions,route_changes,average_travel_time,controlled_average_travel_time,p95_travel_time,total_travel_time,total_delay,peak_utilization,peak_severely_congested_edges,severe_edge_ticks,overload_vehicle_ticks,window_completed,window_throughput,last_arrival,objective
+static,departure,72,72,0,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+reactive,departure,72,72,0,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+predictive,departure,72,72,0,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+anticipatory,departure,72,72,0,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+cooperative,departure,72,72,0,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+rl_swarm,departure,72,72,0,0,96.625,96.93333333333334,96,6957,9,1.0,0,0,0,72,0.24,176,6957.0
+static,junction,72,72,120,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+reactive,junction,72,72,120,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+predictive,junction,72,72,120,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+anticipatory,junction,72,72,120,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+cooperative,junction,72,72,120,0,95.125,95.13333333333334,96,6849,9,1.0,0,0,0,72,0.24,141,6849.0
+rl_swarm,junction,72,72,103,33,106.375,108.63333333333334,131,7659,9,1.0,0,0,0,72,0.24,177,7659.0

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anticipatory-traffic-routing"
+version = "0.1.0"
+description = "Reproducible commitment-aware traffic routing experiments"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+traffic-routing = "traffic_routing.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["traffic_routing*"]

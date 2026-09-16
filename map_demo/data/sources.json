@@ -1,0 +1,17 @@
+{
+  "roads_endpoint": "https://overpass-api.de/api/interpreter",
+  "roads_query": "[out:json][timeout:60];way[\"highway\"~\"^(motorway|trunk|primary|secondary|tertiary)(_link)?$\"](37.350,-122.060,37.451,-121.870);out geom;",
+  "route_requests": {
+    "routes.json": "https://router.project-osrm.org/route/v1/driving/-121.8989248,37.4332273;-122.0363490,37.3688301?steps=true&overview=full&geometries=geojson&annotations=duration,distance&alternatives=3",
+    "routes-tasman.json": "https://router.project-osrm.org/route/v1/driving/-121.8989248,37.4332273;-121.9799548,37.403438;-122.0363490,37.3688301?steps=true&overview=full&geometries=geojson&annotations=duration,distance&continue_straight=true",
+    "routes-montague.json": "https://router.project-osrm.org/route/v1/driving/-121.8989248,37.4332273;-121.9640217,37.3819887;-122.0363490,37.3688301?steps=true&overview=full&geometries=geojson&annotations=duration,distance&continue_straight=true"
+  },
+  "geocoder": "https://nominatim.openstreetmap.org/search",
+  "geocoder_queries": [
+    "Milpitas, California, USA",
+    "Sunnyvale, California, USA"
+  ],
+  "license": "Map data \u00a9 OpenStreetMap contributors, ODbL 1.0",
+  "license_url": "https://www.openstreetmap.org/copyright",
+  "note": "Geometry and OSRM base travel times are real sourced data. All demand, capacities, congestion, and rendered vehicle movements are simulated."
+}
